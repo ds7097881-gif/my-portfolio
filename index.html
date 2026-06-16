@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Public Grievance Redressal System | शिकायत निवारण प्रणाली</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Rajdhani:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ======= HEADER ======= -->
+<header class="site-header">
+  <div class="header-emblem">
+    <div class="emblem-circle">🏛️</div>
+  </div>
+  <div class="header-text">
+    <h1>Public Grievance Redressal System</h1>
+    <p>जन शिकायत निवारण प्रणाली — Government of India</p>
+  </div>
+  <div class="header-live">
+    <span class="live-dot"></span>
+    <span id="live-clock">--:--:--</span>
+  </div>
+</header>
+
+<!-- ======= NAV ======= -->
+<nav class="main-nav">
+  <button class="nav-btn active" onclick="showPage('home')">🏠 Home</button>
+  <button class="nav-btn" onclick="showPage('submit')">📝 Submit Grievance</button>
+  <button class="nav-btn" onclick="showPage('track')">🔍 Track Status</button>
+  <button class="nav-btn" onclick="showPage('feedback')">⭐ Feedback</button>
+  <button class="nav-btn" onclick="showPage('dashboard')">📊 Dashboard</button>
+  <button class="nav-btn" onclick="showPage('admin')">🔐 Admin Panel</button>
+</nav>
+
+<!-- ======= TICKER ======= -->
+<div class="ticker-bar">
+  <span class="ticker-label">LIVE UPDATES</span>
+  <div class="ticker-track">
+    <div class="ticker-content" id="ticker-content">Loading live updates...</div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: HOME -->
+<!-- ===================================================== -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-badge">🇮🇳 Official Portal</div>
+    <h2 class="hero-title">Your Voice Matters</h2>
+    <p class="hero-sub">File grievances, track resolution status, and provide feedback — all in one place. Real-time updates, transparent process.</p>
+    <div class="hero-btns">
+      <button class="cta-primary" onclick="showPage('submit')">📝 File a Grievance</button>
+      <button class="cta-secondary" onclick="showPage('track')">🔍 Track My Grievance</button>
+    </div>
+  </section>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" id="stat-total">0</div>
+      <div class="stat-label">Total Grievances</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-num" id="stat-resolved">0</div>
+      <div class="stat-label">Resolved</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-num" id="stat-pending">0</div>
+      <div class="stat-label">Pending</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-num" id="stat-today">0</div>
+      <div class="stat-label">Filed Today</div>
+    </div>
+  </div>
+
+  <section class="categories-section">
+    <h3>Select Department</h3>
+    <div class="categories-grid">
+      <div class="cat-card" onclick="selectCategory('Water Supply')">💧 Water Supply</div>
+      <div class="cat-card" onclick="selectCategory('Roads & Infrastructure')">🛣️ Roads & Infrastructure</div>
+      <div class="cat-card" onclick="selectCategory('Electricity')">⚡ Electricity</div>
+      <div class="cat-card" onclick="selectCategory('Sanitation')">🗑️ Sanitation</div>
+      <div class="cat-card" onclick="selectCategory('Health Services')">🏥 Health Services</div>
+      <div class="cat-card" onclick="selectCategory('Education')">📚 Education</div>
+      <div class="cat-card" onclick="selectCategory('Police & Safety')">🚔 Police & Safety</div>
+      <div class="cat-card" onclick="selectCategory('Revenue & Tax')">💰 Revenue & Tax</div>
+      <div class="cat-card" onclick="selectCategory('Environment')">🌳 Environment</div>
+      <div class="cat-card" onclick="selectCategory('Other')">📋 Other</div>
+    </div>
+  </section>
+
+  <section class="live-feed-section">
+    <h3>🔴 Live Activity Feed</h3>
+    <div class="live-feed" id="live-feed">
+      <div class="feed-empty">Loading live feed...</div>
+    </div>
+  </section>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: SUBMIT GRIEVANCE -->
+<!-- ===================================================== -->
+<div id="page-submit" class="page">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>📝 Submit New Grievance</h2>
+      <p>All fields marked * are mandatory</p>
+    </div>
+
+    <div class="form-body">
+      <!-- Personal Info -->
+      <div class="form-section">
+        <h3 class="section-title">👤 Personal Information</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" id="f-name" placeholder="Enter your full name" />
+          </div>
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="f-mobile" placeholder="+91 XXXXX XXXXX" maxlength="13" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="f-email" placeholder="your@email.com" />
+          </div>
+          <div class="form-group">
+            <label>Aadhaar Number (Optional)</label>
+            <input type="text" id="f-aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Address *</label>
+          <textarea id="f-address" rows="2" placeholder="Enter your full address"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>District *</label>
+            <select id="f-district">
+              <option value="">-- Select District --</option>
+              <option>Rohtak</option><option>Hisar</option><option>Panipat</option>
+              <option>Ambala</option><option>Karnal</option><option>Gurugram</option>
+              <option>Faridabad</option><option>Sonipat</option><option>Bhiwani</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>State *</label>
+            <select id="f-state">
+              <option value="">-- Select State --</option>
+              <option>Haryana</option><option>Delhi</option><option>Punjab</option>
+              <option>Uttar Pradesh</option><option>Rajasthan</option><option>Other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grievance Details -->
+      <div class="form-section">
+        <h3 class="section-title">📋 Grievance Details</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Department / Category *</label>
+            <select id="f-category">
+              <option value="">-- Select Category --</option>
+              <option>Water Supply</option><option>Roads & Infrastructure</option>
+              <option>Electricity</option><option>Sanitation</option>
+              <option>Health Services</option><option>Education</option>
+              <option>Police & Safety</option><option>Revenue & Tax</option>
+              <option>Environment</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Priority Level *</label>
+            <select id="f-priority">
+              <option value="">-- Select Priority --</option>
+              <option value="low">🟢 Low</option>
+              <option value="medium">🟡 Medium</option>
+              <option value="high">🔴 High / Urgent</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Grievance Title *</label>
+          <input type="text" id="f-title" placeholder="Brief one-line description of your grievance" />
+        </div>
+        <div class="form-group">
+          <label>Detailed Description *</label>
+          <textarea id="f-desc" rows="5" placeholder="Please describe your grievance in detail. Include when it started, what has been affected, and any earlier attempts to resolve this issue."></textarea>
+          <div class="char-count"><span id="char-count">0</span>/1000 characters</div>
+        </div>
+        <div class="form-group">
+          <label>Upload Supporting Documents (Optional)</label>
+          <div class="file-upload-area" id="file-drop-zone">
+            <input type="file" id="f-files" multiple accept="image/*,.pdf,.doc,.docx" style="display:none" />
+            <div onclick="document.getElementById('f-files').click()">
+              📁 Click to upload or drag & drop files here<br/>
+              <small>Supported: JPG, PNG, PDF, DOC (Max 5MB each)</small>
+            </div>
+          </div>
+          <div id="file-list"></div>
+        </div>
+      </div>
+
+      <!-- OTP Verification -->
+      <div class="form-section">
+        <h3 class="section-title">📱 Mobile Verification</h3>
+        <div class="otp-row">
+          <div class="form-group" style="flex:1">
+            <label>Enter Mobile Number for OTP *</label>
+            <input type="tel" id="otp-mobile" placeholder="10-digit mobile number" />
+          </div>
+          <button class="otp-btn" onclick="sendOTP()">Send OTP</button>
+        </div>
+        <div class="otp-verify-row" id="otp-verify-row" style="display:none">
+          <input type="text" id="otp-input" placeholder="Enter 6-digit OTP" maxlength="6" />
+          <button class="otp-btn green" onclick="verifyOTP()">Verify</button>
+          <span id="otp-timer" class="otp-timer"></span>
+        </div>
+        <div id="otp-status"></div>
+      </div>
+
+      <!-- Declaration -->
+      <div class="form-section">
+        <label class="checkbox-label">
+          <input type="checkbox" id="f-declaration" />
+          <span>I hereby declare that all information provided is true and correct to the best of my knowledge. I understand that providing false information may result in legal action.</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-submit" onclick="submitGrievance()">📤 Submit Grievance</button>
+        <button class="btn-reset" onclick="resetForm()">🔄 Reset Form</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS MODAL -->
+  <div class="modal" id="success-modal">
+    <div class="modal-box">
+      <div class="modal-icon">✅</div>
+      <h3>Grievance Submitted Successfully!</h3>
+      <p>Your grievance has been registered.</p>
+      <div class="token-display">
+        <span>Token Number:</span>
+        <strong id="generated-token">--</strong>
+      </div>
+      <p class="modal-note">Please save your token number to track your grievance status. An SMS will be sent to your registered mobile number.</p>
+      <div class="modal-btns">
+        <button onclick="printToken()">🖨️ Print Token</button>
+        <button onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: TRACK STATUS -->
+<!-- ===================================================== -->
+<div id="page-track" class="page">
+  <div class="track-container">
+    <div class="form-header">
+      <h2>🔍 Track Grievance Status</h2>
+      <p>Enter your token number or mobile number to track</p>
+    </div>
+
+    <div class="track-search">
+      <div class="search-tabs">
+        <button class="tab-btn active" onclick="switchTrackTab('token')">By Token Number</button>
+        <button class="tab-btn" onclick="switchTrackTab('mobile')">By Mobile Number</button>
+      </div>
+      <div id="track-token-input">
+        <input type="text" id="track-token" placeholder="Enter Token Number (e.g. GRV-2025-0001)" />
+      </div>
+      <div id="track-mobile-input" style="display:none">
+        <input type="tel" id="track-mobile" placeholder="Enter Registered Mobile Number" />
+      </div>
+      <button class="btn-track" onclick="trackGrievance()">🔍 Track Now</button>
+    </div>
+
+    <div id="track-results" class="track-results" style="display:none">
+      <!-- Results appear here -->
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: FEEDBACK -->
+<!-- ===================================================== -->
+<div id="page-feedback" class="page">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>⭐ Share Your Feedback</h2>
+      <p>Help us improve our services</p>
+    </div>
+
+    <div class="feedback-body">
+      <div class="form-group">
+        <label>Token Number (Optional)</label>
+        <input type="text" id="fb-token" placeholder="GRV-XXXX-XXXX" />
+      </div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="fb-name" placeholder="Enter your name" />
+      </div>
+
+      <div class="rating-section">
+        <h3>Rate Your Experience</h3>
+        <div class="rating-categories">
+          <div class="rating-item">
+            <span>Overall Satisfaction</span>
+            <div class="stars" id="stars-overall" data-key="overall">
+              <span onclick="setRating('overall',1)">★</span><span onclick="setRating('overall',2)">★</span>
+              <span onclick="setRating('overall',3)">★</span><span onclick="setRating('overall',4)">★</span>
+              <span onclick="setRating('overall',5)">★</span>
+            </div>
+          </div>
+          <div class="rating-item">
+            <span>Speed of Resolution</span>
+            <div class="stars" id="stars-speed" data-key="speed">
+              <span onclick="setRating('speed',1)">★</span><span onclick="setRating('speed',2)">★</span>
+              <span onclick="setRating('speed',3)">★</span><span onclick="setRating('speed',4)">★</span>
+              <span onclick="setRating('speed',5)">★</span>
+            </div>
+          </div>
+          <div class="rating-item">
+            <span>Staff Behaviour</span>
+            <div class="stars" id="stars-staff" data-key="staff">
+              <span onclick="setRating('staff',1)">★</span><span onclick="setRating('staff',2)">★</span>
+              <span onclick="setRating('staff',3)">★</span><span onclick="setRating('staff',4)">★</span>
+              <span onclick="setRating('staff',5)">★</span>
+            </div>
+          </div>
+          <div class="rating-item">
+            <span>Portal Usability</span>
+            <div class="stars" id="stars-portal" data-key="portal">
+              <span onclick="setRating('portal',1)">★</span><span onclick="setRating('portal',2)">★</span>
+              <span onclick="setRating('portal',3)">★</span><span onclick="setRating('portal',4)">★</span>
+              <span onclick="setRating('portal',5)">★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Was your grievance resolved? *</label>
+        <div class="radio-group">
+          <label><input type="radio" name="resolved" value="yes" /> ✅ Yes, Fully Resolved</label>
+          <label><input type="radio" name="resolved" value="partial" /> 🔶 Partially Resolved</label>
+          <label><input type="radio" name="resolved" value="no" /> ❌ Not Resolved</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Comments / Suggestions</label>
+        <textarea id="fb-comment" rows="4" placeholder="Share your experience, what went well, or suggestions for improvement..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Would you recommend this portal?</label>
+        <div class="recommend-btns">
+          <button class="rec-btn" id="rec-yes" onclick="setRecommend('yes')">👍 Yes</button>
+          <button class="rec-btn" id="rec-no" onclick="setRecommend('no')">👎 No</button>
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="submitFeedback()">📤 Submit Feedback</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: DASHBOARD -->
+<!-- ===================================================== -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-container">
+    <h2>📊 Live Dashboard</h2>
+    <div class="dashboard-stats">
+      <div class="dash-card total">
+        <div class="dash-num" id="d-total">0</div>
+        <div>Total Grievances</div>
+      </div>
+      <div class="dash-card green">
+        <div class="dash-num" id="d-resolved">0</div>
+        <div>Resolved</div>
+      </div>
+      <div class="dash-card orange">
+        <div class="dash-num" id="d-pending">0</div>
+        <div>Pending</div>
+      </div>
+      <div class="dash-card red">
+        <div class="dash-num" id="d-overdue">0</div>
+        <div>Overdue</div>
+      </div>
+      <div class="dash-card blue">
+        <div class="dash-num" id="d-today">0</div>
+        <div>Today</div>
+      </div>
+      <div class="dash-card purple">
+        <div class="dash-num" id="d-feedback">0</div>
+        <div>Feedbacks</div>
+      </div>
+    </div>
+
+    <div class="dashboard-charts">
+      <div class="chart-box">
+        <h3>Category-wise Distribution</h3>
+        <div id="chart-category" class="bar-chart"></div>
+      </div>
+      <div class="chart-box">
+        <h3>Priority Distribution</h3>
+        <div id="chart-priority" class="pie-area"></div>
+      </div>
+    </div>
+
+    <div class="recent-table">
+      <h3>Recent Grievances</h3>
+      <div class="table-wrap">
+        <table id="recent-table">
+          <thead>
+            <tr>
+              <th>Token</th><th>Name</th><th>Category</th>
+              <th>Priority</th><th>Status</th><th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recent-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- PAGE: ADMIN PANEL -->
+<!-- ===================================================== -->
+<div id="page-admin" class="page">
+  <div id="admin-login-panel">
+    <div class="form-container" style="max-width:400px">
+      <div class="form-header">
+        <h2>🔐 Admin Login</h2>
+        <p>Authorized personnel only</p>
+      </div>
+      <div class="form-body">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" id="admin-user" placeholder="admin" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="admin-pass" placeholder="••••••••" />
+        </div>
+        <button class="btn-submit" onclick="adminLogin()">🔓 Login</button>
+        <p class="hint-text">Demo: admin / admin123</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-panel" style="display:none">
+    <div class="admin-header">
+      <h2>🛡️ Admin Control Panel</h2>
+      <button class="btn-logout" onclick="adminLogout()">🚪 Logout</button>
+    </div>
+
+    <div class="admin-controls">
+      <div class="control-bar">
+        <input type="text" id="admin-search" placeholder="🔍 Search by token, name, category..." oninput="adminSearch()" />
+        <select id="admin-filter-status" onchange="adminSearch()">
+          <option value="">All Status</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+        <select id="admin-filter-priority" onchange="adminSearch()">
+          <option value="">All Priority</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <button onclick="exportCSV()">📥 Export CSV</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="admin-table">
+        <thead>
+          <tr>
+            <th>Token</th><th>Name</th><th>Mobile</th><th>Category</th>
+            <th>Priority</th><th>Title</th><th>Status</th><th>Date</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="admin-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Update Status Modal -->
+  <div class="modal" id="update-modal">
+    <div class="modal-box">
+      <h3>Update Grievance Status</h3>
+      <p id="update-token-label"></p>
+      <div class="form-group">
+        <label>New Status</label>
+        <select id="new-status">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Remarks / Comment</label>
+        <textarea id="update-remarks" rows="3" placeholder="Add update remarks..."></textarea>
+      </div>
+      <div class="modal-btns">
+        <button onclick="saveStatusUpdate()">💾 Update</button>
+        <button onclick="closeUpdateModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======= FOOTER ======= -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div>🏛️ Public Grievance Redressal System | Government Portal</div>
+    <div>Helpline: <strong>1800-XXX-XXXX</strong> (Toll Free) | Email: grievance@gov.in</div>
+    <div id="footer-clock"></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
